@@ -1,13 +1,19 @@
+import store from "@/store";
 import axios from "axios";
+import { Message } from 'element-ui';
 
 // 创建实例
 const service = axios.create({
-  baseURL: process.env.VUE_API_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 3000,
 });
 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
+  //通过请求拦截器，将token发送给后台
+  // if(store.getters.token){
+  //   config.headers.Authorization=`Bearer ${store.getters.token}`
+  // }
   // 在发送请求之前做些什么
   return config;
 }, function (error) {

@@ -10,6 +10,8 @@ Vue.use(ElementUI);
 
 // 引入全局公共样式
 import "./style/index.scss"
+// 引入页面鉴权
+import "./permission"
 
 new Vue({
   router,

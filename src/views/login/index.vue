@@ -3,13 +3,17 @@
     
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"  class="demo-ruleForm">
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username"></el-input>
+        <el-input v-model.trim="ruleForm.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password"></el-input>
+        <el-input v-model.trim="ruleForm.password" type="password"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码" prop="code" style="width:300px">
+        <el-input v-model.trim="ruleForm.code"></el-input>
+        <img :src="imgCode" alt="" class="imgcode">
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">提交</el-button>
+        <el-button type="primary" @click="handleLogin">提交</el-button>
         <el-button>获取密码</el-button>
       </el-form-item>
     </el-form>
@@ -24,6 +28,7 @@
         ruleForm:{
           username:'test',
           password:"",
+          code:"",
         },
         rules: {
           username: [
@@ -32,8 +37,30 @@
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
           ],
-        }
+          code: [
+            { required: true, message: '请输入验证码', trigger: 'blur' },
+          ],
+        },
+        imgCode:''
       }
+    },
+    async created(){
+      const data = await this.$store.dispatch('user/code')
+      this.imgCode = data.captchaImg
+    },
+    methods: {
+      // 点击提交
+      handleLogin() {
+        if(this.ruleForm.username=='test' && this.ruleForm.password=='1234567' && this.ruleForm.code.length>0){
+          this.$message.success('登录成功')
+          this.$router.push('/')
+          return
+        }else{
+          this.$message('登录失败')
+          this.$store.dispatch('user/login',this.ruleForm)
+        }
+        
+      },
     },
   }
 </script>
@@ -58,6 +85,10 @@ $cursor: #fff;
     right: 0;
     margin:  auto;
     text-align: center;
+  }
+  .imgcode{
+    position: absolute;
+    margin-left: 10px;
   }
 }
 </style>
