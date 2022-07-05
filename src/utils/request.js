@@ -11,9 +11,7 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
   //通过请求拦截器，将token发送给后台
-  // if(store.getters.token){
-  //   config.headers.Authorization=`Bearer ${store.getters.token}`
-  // }
+    config.headers.Authorization=`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNjU3MDAxODA2LCJleHAiOjE2NTc2MDY2MDZ9.hWTg8QsM2ziulSZSlkeNnX7vpz7YydMQ1uVMSX0Fi2Q4K4yIu68aLs6DEtWpE1ZQaq0m7ZuQd4XViU9sXW7jNQ`
   // 在发送请求之前做些什么
   return config;
 }, function (error) {

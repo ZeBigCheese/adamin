@@ -54,10 +54,10 @@
         if(this.ruleForm.username=='test' && this.ruleForm.password=='1234567' && this.ruleForm.code.length>0){
           this.$message.success('登录成功')
           this.$router.push('/')
+          this.$store.dispatch('user/login',this.ruleForm)
           return
         }else{
           this.$message('登录失败')
-          this.$store.dispatch('user/login',this.ruleForm)
         }
         
       },

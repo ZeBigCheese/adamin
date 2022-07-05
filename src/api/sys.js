@@ -17,3 +17,11 @@ export const code=()=>{
     method:"GET"
   })
 }
+
+// 获取用户信息
+export const getUserInfo=()=>{
+  return request({
+    url:"vueadmin-java/sys/userInfo",
+    method:"GET",
+  })
+}

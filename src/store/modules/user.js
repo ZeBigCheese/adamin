@@ -1,16 +1,23 @@
-import {login,code} from "../../api/sys"
-import {setItem,getItem} from "../../utils/storage"
+import router from "@/router"
+import {login,code,getUserInfo} from "../../api/sys"
+import {setItem,getItem,removeAllItem} from "../../utils/storage"
 
 export default{
   namespaced:true,
   state:{
     token:getItem('token') || "",
+    userInfo:getItem('userInfo') || '',
   },
   mutations:{
     // 存储token
     setToken(state,token){
       state.token=token
       setItem('token',token)
+    },
+    // 存储userinfo
+    setUserInfo(state,userInfo){
+      state.userInfo=userInfo
+      setItem('userInfo',userInfo)
     }
   },
   actions:{
@@ -32,6 +39,18 @@ export default{
       // console.log(res.data.data.token)
       commit('setToken',res.data.data.token)
       return res.data.data
+    },
+    // 获取用户信息
+    async getUserInfo({commit}){
+      const res=await getUserInfo()
+      console.log(res,'用户信息')
+    },
+    // 退出登录
+    async logOut({commit}){
+      commit('setToken',"")
+      commit('setUserInfo',"")
+      removeAllItem()
+      router.push('/login')
     }
   },
 }

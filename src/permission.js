@@ -10,7 +10,12 @@ router.beforeEach((to, from, next) => {
     if(to.path=='/login'){
       next('/')
     }else{
-      next()
+      if(store.getters.hasUserInfo){
+        next()
+      }else{
+        store.dispatch('user/getUserInfo')
+        next()
+      }
     }
   }else{
     if(whiteList.includes(to.path)){
