@@ -2,12 +2,13 @@
   <div class="tags-view-container">
     <router-link
     :to="item.path"
-    v-for="item in $store.getters.tagsViewList"
-    :key="item.path"
+    v-for="(item,index) in $store.getters.tagsViewList"
+    :key="index"
      class="tags-view-item" 
      :class="isActive(item) ? 'active' : ''" 
     >
     {{item.meta.title}}
+    <i @click="handRemoveTags(index)" class="el-icon-close" v-if="isActive(item) ? 'active' : ''"></i>
     </router-link>
   </div>
 </template>
@@ -15,8 +16,13 @@
 <script>
   export default {
     methods: {
+      // 是否选中
      isActive(item) {
         return item.path==this.$route.path
+      },
+      // 点击删除当前tags
+      handRemoveTags(index){
+        this.$store.getters.tagsViewList.splice(index,1)
       }
     },
   }

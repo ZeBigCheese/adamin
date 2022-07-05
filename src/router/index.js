@@ -23,7 +23,7 @@ const publicroutes = [
         name:"profile",
         component:()=>import('../views/profile'),
         meta: {
-          title: "个人中心",
+          title: "首页",
         },
       },
       {
